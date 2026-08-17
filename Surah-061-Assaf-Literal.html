@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+        <html lang="bn">
+        <head>
+          <meta charset="UTF-8" />
+          <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+          <title>সূরা Assaf (061) – ধাতব অর্থ (লিসানুল আরব)</title>
+          <style>
+            @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+Bengali:wght@400;600;700;800&family=Hind+Siliguri:wght@400;600;700&family=Amiri:wght@400;700&display=swap');
+            * { font-family: 'Hind Siliguri','Noto Serif Bengali', system-ui, sans-serif; }
+            .amiri { font-family: 'Amiri', serif; }
+            body { background: #f0fdf4; margin: 0; padding: 24px; color: #052e16; }
+            .container { max-width: 880px; margin: 0 auto; }
+            .header-card { background: linear-gradient(135deg, #052e16 0%, #15803d 100%); color: white; padding: 36px; border-radius: 28px; text-align: center; margin-bottom: 24px; }
+            .surah-card { background: white; border-radius: 22px; padding: 24px; margin-bottom: 24px; border: 1px solid #bbf7d0; box-shadow: 0 10px 30px -10px rgba(21, 128, 61, 0.15); }
+            .ayah-trans { font-size: 22px; font-weight: 700; line-height: 1.7; color: #14532d; margin-bottom: 14px; }
+            .word-row { display: flex; flex-wrap: wrap; gap: 6px 12px; background: #f8fef9; border-radius: 12px; padding: 12px; border: 1px dashed #bbf7d0; margin-bottom: 10px; }
+            .word-item { display: inline-flex; align-items: baseline; gap: 4px; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 14px; padding: 6px 14px; font-size: 17px; font-weight: 600; flex-wrap: wrap; }
+            .word-ar { font-family: 'Amiri', serif; font-size: 22px; color: #15803d; }
+            .word-pron { color: #4d7c5a; font-weight: 500; }
+            .word-root { color: #b45309; font-weight: 700; font-size: 15px; }
+            .word-mean { color: #052e16; font-weight: 700; }
+            .note-box { width: 100%; height: 80px; border: 2px solid #16a34a; border-radius: 14px; padding: 12px 16px; font-size: 16px; font-family: inherit; resize: none; margin-top: 16px; background: #f8fef9; }
+            .ending-box { background: linear-gradient(135deg, #15803d, #052e16); color: white; text-align: center; padding: 20px; border-radius: 16px; font-weight: 800; font-size: 22px; margin-top: 24px; }
+            .download-area { background: white; border-radius: 22px; border: 1px solid #bbf7d0; padding: 24px; margin-top: 28px; box-shadow: 0 10px 40px -12px rgba(21, 128, 61, 0.2); }
+            .btn-download { background: #052e16; color: white; border: none; padding: 12px 28px; border-radius: 40px; font-weight: 700; cursor: pointer; transition: all 0.2s; }
+            .btn-download:hover { background: #000; transform: scale(0.98); }
+            .save-indicator { font-size: 12px; color: #16a34a; font-weight: 600; margin-top: 4px; display: none; }
+            .save-indicator.show { display: block; }
+          </style>
+          <script src="https://cdn.tailwindcss.com"></script>
+          <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+          <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+          <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+        </head>
+        <body>
+          <div class="container" id="root"></div>
+
+          <script type="text/babel">
+            const { useState, useEffect } = React;
+
+            const STORAGE_PREFIX = "surah_061_note_";
+            const ayahData = [
+      { no: 1, trans: "আকাশসমূহে ও পৃথিবীতে যা কিছু আছে সবই আল্লাহর পবিত্রতা ঘোষণা করে। আর তিনি পরাক্রমশালী, প্রজ্ঞাময়।—", words: [ { ar: "سَبَّحَ", pron: "সাব্বাহা", root: "س ب ح", mean: "পবিত্রতা ঘোষণা করে" }, { ar: "لِلَّهِ", pron: "লিল-লাহি", root: "ا ل ه", mean: "আল্লাহর জন্য" }, { ar: "مَا", pron: "মা", root: "م ا", mean: "যা কিছু" }, { ar: "فِي", pron: "ফি", root: "ف ي", mean: "মধ্যে" }, { ar: "السَّمَاوَاتِ", pron: "আস-সামাওয়াতি", root: "س م و", mean: "আকাশসমূহ" }, { ar: "وَمَا", pron: "ওয়া-মা", root: "م ا", mean: "এবং যা" }, { ar: "فِي", pron: "ফি", root: "ف ي", mean: "মধ্যে" }, { ar: "الْأَرْضِ", pron: "আল-আরদি", root: "ا ر ض", mean: "পৃথিবী" }, { ar: "وَهُوَ", pron: "ওয়া-হুওয়া", root: "ه و", mean: "আর তিনি" }, { ar: "الْعَزِيزُ", pron: "আল-'আযিজু", root: "ع ز ز", mean: "পরাক্রমশালী" }, { ar: "الْحَكِيمُ", pron: "আল-হাকিমু", root: "ح ك م", mean: "প্রজ্ঞাময়" } ] },
+      { no: 2, trans: "হে মুমিনগণ! তোমরা এমন কথা বলো কেন যা তোমরা করো না?—", words: [ { ar: "يَا", pron: "ইয়া", root: "ي ا", mean: "হে" }, { ar: "أَيُّهَا", pron: "আইয়ুহা", root: "ا ي", mean: "যারা" }, { ar: "الَّذِينَ", pron: "আল্লাযিনা", root: "ا ل ل ذ", mean: "যারা" }, { ar: "آمَنُوا", pron: "আমানু", root: "ا م ن", mean: "ঈমান এনেছে" }, { ar: "لِمَ", pron: "লিমা", root: "ل م ا", mean: "কেন" }, { ar: "تَقُولُونَ", pron: "তাকুলুনা", root: "ق و ل", mean: "তোমরা বলো" }, { ar: "مَا", pron: "মা", root: "م ا", mean: "যা" }, { ar: "لَا", pron: "লা", root: "ل ا", mean: "না" }, { ar: "تَفْعَلُونَ", pron: "তাফ'আলুনা", root: "ف ع ل", mean: "তোমরা করো" } ] },
+      { no: 3, trans: "তোমরা যা করো না তা বলা আল্লাহর কাছে অত্যন্ত ঘৃণার কাজ।—", words: [ { ar: "كَبُرَ", pron: "কাবুরা", root: "ك ب ر", mean: "বড়/ঘৃণার" }, { ar: "مَقْتًا", pron: "মাক্তান", root: "م ق ت", mean: "ঘৃণা" }, { ar: "عِندَ", pron: "'ইন্দা", root: "ع ن د", mean: "কাছে" }, { ar: "اللَّهِ", pron: "আল্লাহি", root: "ا ل ه", mean: "আল্লাহর" }, { ar: "أَن", pron: "আন", root: "ا ن", mean: "যে" }, { ar: "تَقُولُوا", pron: "তাকুলু", root: "ق و ل", mean: "তোমরা বলো" }, { ar: "مَا", pron: "মা", root: "م ا", mean: "যা" }, { ar: "لَا", pron: "লা", root: "ل ا", mean: "না" }, { ar: "تَفْعَلُونَ", pron: "তাফ'আলুনা", root: "ف ع ل", mean: "তোমরা করো" } ] },
+      { no: 4, trans: "নিশ্চয় আল্লাহ তাদের ভালোবাসেন যারা তাঁর পথে সুসংহত প্রাচীরের ন্যায় কাতারবদ্ধ হয়ে যুদ্ধ করে।—", words: [ { ar: "إِنَّ", pron: "ইন্না", root: "ا ن", mean: "নিশ্চয়" }, { ar: "اللَّهَ", pron: "আল্লাহা", root: "ا ل ه", mean: "আল্লাহ" }, { ar: "يُحِبُّ", pron: "ইউহিব্বু", root: "ح ب ب", mean: "ভালোবাসেন" }, { ar: "الَّذِينَ", pron: "আল্লাযিনা", root: "ا ل ل ذ", mean: "যারা" }, { ar: "يُقَاتِلُونَ", pron: "ইউক্বাতিলুনা", root: "ق ت ل", mean: "যুদ্ধ করে" }, { ar: "فِي", pron: "ফি", root: "ف ي", mean: "মধ্যে" }, { ar: "سَبِيلِهِ", pron: "সাবিলিহি", root: "س ب ل", mean: "তার পথ" }, { ar: "صَفًّا", pron: "সাফফান", root: "ص ف ف", mean: "কাতারবদ্ধ/সারিবদ্ধ" }, { ar: "كَأَنَّهُم", pron: "কা-আন্নাহুম", root: "ك ا ن", mean: "যেন তারা" }, { ar: "بُنْيَانٌ", pron: "বুনিয়ানুন", root: "ب ن ي", mean: "নির্মাণ/প্রাচীর" }, { ar: "مَّرْصُوصٌ", pron: "মারসুসুন", root: "ر ص ص", mean: "সুসংহত/শক্তিশালী" } ] },
+      { no: 5, trans: "আর স্মরণ করো, যখন মূসা তার সম্প্রদায়কে বলেছিল, 'হে আমার সম্প্রদায়! তোমরা কেন আমাকে কষ্ট দাও, অথচ তোমরা জানো যে আমি তোমাদের কাছে আল্লাহর রসূল?' অতঃপর当他们 যখন বিচ্যুত হলো, তখন আল্লাহ তাদের অন্তরকে বিচ্যুত করলেন। আর আল্লাহ ফাসিকদের পথ দেখান না।—", words: [ { ar: "وَإِذْ", pron: "ওয়া-ইয", root: "ا ذ", mean: "আর স্মরণ করো যখন" }, { ar: "قَالَ", pron: "ক্বালা", root: "ق و ل", mean: "বলেছিল" }, { ar: "مُوسَى", pron: "মুসা", root: "م و س", mean: "মূসা" }, { ar: "لِقَوْمِهِ", pron: "লি-ক্বাওমিহি", root: "ق و م", mean: "তার সম্প্রদায়কে" }, { ar: "يَا", pron: "ইয়া", root: "ي ا", mean: "হে" }, { ar: "قَوْمِ", pron: "ক্বাওমি", root: "ق و م", mean: "আমার সম্প্রদায়" }, { ar: "لِمَ", pron: "লিমা", root: "ل م ا", mean: "কেন" }, { ar: "تُؤْذُونَنِي", pron: "তু'যুনানি", root: "ا ذ ي", mean: "তোমরা আমাকে কষ্ট দাও" }, { ar: "وَقَد", pron: "ওয়া-ক্বদ", root: "و ق د", mean: "অথচ" }, { ar: "تَعْلَمُونَ", pron: "তা'লামুনা", root: "ع ل م", mean: "তোমরা জানো" }, { ar: "أَنِّي", pron: "আন্নি", root: "ا ن", mean: "যে আমি" }, { ar: "رَسُولُ", pron: "রাসুলু", root: "ر س ل", mean: "রসূল" }, { ar: "اللَّهِ", pron: "আল্লাহি", root: "ا ل ه", mean: "আল্লাহর" }, { ar: "إِلَيْكُمْ", pron: "ইলাইকুম", root: "ا ل ي", mean: "তোমাদের কাছে" }, { ar: "فَلَمَّا", pron: "ফা-লাম্মা", root: "ل م ا", mean: "অতঃপর যখন" }, { ar: "زَاغُوا", pron: "যাগু", root: "ز ي غ", mean: "বিচ্যুত/বক্র হল" }, { ar: "أَزَاغَ", pron: "আযাগা", root: "ز ي غ", mean: "বিচ্যুত করলেন" }, { ar: "اللَّهُ", pron: "আল্লাহু", root: "ا ل ه", mean: "আল্লাহ" }, { ar: "قُلُوبَهُمْ", pron: "কুলুবাহুম", root: "ق ل ب", mean: "তাদের অন্তর" }, { ar: "وَاللَّهُ", pron: "ওয়াল-লাহু", root: "ا ل ه", mean: "আর আল্লাহ" }, { ar: "لَا", pron: "লা", root: "ل ا", mean: "না" }, { ar: "يَهْدِي", pron: "ইয়াহ্দি", root: "ه د ي", mean: "পথ দেখান" }, { ar: "الْقَوْمَ", pron: "আল-ক্বাওমা", root: "ق و م", mean: "সম্প্রদায়কে" }, { ar: "الْفَاسِقِينَ", pron: "আল-ফাসিক্বিনা", root: "ف س ق", mean: "ফাসিক/সীমালঙ্ঘনকারীদের" } ] },
+      { no: 6, trans: "আর স্মরণ করো, যখন মরিয়মের পুত্র ঈসা বলেছিল, 'হে বনী ইসরাঈল! নিশ্চয় আমি তোমাদের কাছে আল্লাহর রসূল, আমার পূর্ববর্তী তাওরাতের সত্যায়নকারী এবং আমার পরে আসন্ন রসূল আহমদের সুসংবাদদাতা।' অতঃপর যখন তিনি তাদের কাছে সুস্পষ্ট নিদর্শন নিয়ে এলেন, তখন তারা বলল, 'এটা তো স্পষ্ট জাদু।'—", words: [ { ar: "وَإِذْ", pron: "ওয়া-ইয", root: "ا ذ", mean: "আর স্মরণ করো যখন" }, { ar: "قَالَ", pron: "ক্বালা", root: "ق و ل", mean: "বলেছিল" }, { ar: "عِيسَى", pron: "'ঈসা", root: "ع ي س", mean: "ঈসা" }, { ar: "ابْنُ", pron: "ইবনু", root: "ب ن ي", mean: "পুত্র" }, { ar: "مَرْيَمَ", pron: "মারইয়ামা", root: "م ر ي م", mean: "মরিয়ম" }, { ar: "يَا", pron: "ইয়া", root: "ي ا", mean: "হে" }, { ar: "بَنِي", pron: "বনি", root: "ب ن ي", mean: "সন্তানগণ" }, { ar: "إِسْرَائِيلَ", pron: "ইসরা-ইলা", root: "ا س ر ا ي ل", mean: "ইসরাঈল" }, { ar: "إِنِّي", pron: "ইন্নি", root: "ا ن", mean: "নিশ্চয় আমি" }, { ar: "رَسُولُ", pron: "রাসুলু", root: "ر س ل", mean: "রসূল" }, { ar: "اللَّهِ", pron: "আল্লাহি", root: "ا ل ه", mean: "আল্লাহর" }, { ar: "إِلَيْكُم", pron: "ইলাইকুম", root: "ا ل ي", mean: "তোমাদের কাছে" }, { ar: "مُصَدِّقًا", pron: "মুসাদ্দিক্বান", root: "ص د ق", mean: "সত্যায়নকারী" }, { ar: "لِّمَا", pron: "লি-মা", root: "ل م ا", mean: "সে যা" }, { ar: "بَيْنَ", pron: "বাইনা", root: "ب ي ن", mean: "মধ্যে" }, { ar: "يَدَيَّ", pron: "ইয়াদাইয়্যা", root: "ي د ي", mean: "আমার হাতের (পূর্ববর্তী)" }, { ar: "مِنَ", pron: "মিনা", root: "م ن", mean: "হতে" }, { ar: "التَّوْرَاةِ", pron: "আত-তাওরাতি", root: "ت و ر", mean: "তাওরাত" }, { ar: "وَمُبَشِّرًا", pron: "ওয়া-মুবাশশিরান", root: "ب ش ر", mean: "এবং সুসংবাদদাতা" }, { ar: "بِرَسُولٍ", pron: "বি-রাসুলিন", root: "ر س ل", mean: "রসূলের" }, { ar: "يَأْتِي", pron: "ইয়া'তি", root: "ا ت ي", mean: "আসবে" }, { ar: "مِن", pron: "মিন", root: "م ن", mean: "হতে" }, { ar: "بَعْدِي", pron: "বা'দি", root: "ب ع د", mean: "আমার পরে" }, { ar: "اسْمُهُ", pron: "ইসমুহু", root: "س م و", mean: "তার নাম" }, { ar: "أَحْمَدُ", pron: "আহমাদু", root: "ح م د", mean: "আহমদ" }, { ar: "فَلَمَّا", pron: "ফা-লাম্মা", root: "ل م ا", mean: "অতঃপর যখন" }, { ar: "جَاءَهُم", pron: "জা-আহুম", root: "ج ي ا", mean: "তাদের কাছে এল" }, { ar: "بِالْبَيِّنَاتِ", pron: "বিল-বাইয়্যিনাতি", root: "ب ي ن", mean: "সুস্পষ্ট নিদর্শন" }, { ar: "قَالُوا", pron: "কালু", root: "ق و ل", mean: "তারা বলল" }, { ar: "هَذَا", pron: "হাযা", root: "ه ذ ا", mean: "এটা" }, { ar: "سِحْرٌ", pron: "সিহরুন", root: "س ح ر", mean: "জাদু/মায়া" }, { ar: "مُّبِينٌ", pron: "মুবিনুন", root: "ب ي ن", mean: "স্পষ্ট" } ] },
+      { no: 7, trans: "আর সেই ব্যক্তির চেয়ে বড় জালিম আর কে, যে আল্লাহর প্রতি মিথ্যা রচনা করে, অথচ তাকে ইসলামের দিকে আহ্বান করা হয়? আর আল্লাহ জালিম সম্প্রদায়কে পথ দেখান না।—", words: [ { ar: "وَمَنْ", pron: "ওয়া-মান", root: "م ن", mean: "আর যে" }, { ar: "أَظْلَمُ", pron: "আযলামু", root: "ظ ل م", mean: "বড় জালিম" }, { ar: "مِمَّن", pron: "মিম্মান", root: "م ن", mean: "সে ব্যক্তি থেকে" }, { ar: "افْتَرَى", pron: "ইফতারি", root: "ف ر ي", mean: "রচনা/মনগড়া করেছে" }, { ar: "عَلَى", pron: "'আলা", root: "ع ل ي", mean: "উপর" }, { ar: "اللَّهِ", pron: "আল্লাহি", root: "ا ل ه", mean: "আল্লাহর" }, { ar: "الْكَذِبَ", pron: "আল-কাযিবা", root: "ك ذ ب", mean: "মিথ্যা" }, { ar: "وَهُوَ", pron: "ওয়া-হুওয়া", root: "ه و", mean: "অথচ সে" }, { ar: "يُدْعَى", pron: "ইউদ'আ", root: "د ع و", mean: "আহ্বান করা হয়" }, { ar: "إِلَى", pron: "ইলা", root: "ا ل ي", mean: "দিকে" }, { ar: "الْإِسْلَامِ", pron: "আল-ইসলামি", root: "س ل م", mean: "আনুগত্য/শান্তি (ইসলাম)" }, { ar: "وَاللَّهُ", pron: "ওয়াল-লাহু", root: "ا ل ه", mean: "আর আল্লাহ" }, { ar: "لَا", pron: "লা", root: "ل ا", mean: "না" }, { ar: "يَهْدِي", pron: "ইয়াহ্দি", root: "ه د ي", mean: "পথ দেখান" }, { ar: "الْقَوْمَ", pron: "আল-ক্বাওমা", root: "ق و م", mean: "সম্প্রদায়কে" }, { ar: "الظَّالِمِينَ", pron: "আয-যালিমিনা", root: "ظ ل م", mean: "জালিমদের" } ] },
+      { no: 8, trans: "তারা চায় আল্লাহর নূরকে তাদের মুখ দিয়ে নিভিয়ে দিতে। আর আল্লাহ তাঁর নূরকে পূর্ণরূপে বিকশিত করতে অস্বীকার করেন, যদিও কাফিররা তা অপছন্দ করে।—", words: [ { ar: "يُرِيدُونَ", pron: "ইউরিদুনা", root: "ر و د", mean: "তারা চায়" }, { ar: "لِيُطْفِئُوا", pron: "লি-ইউতফি-উ", root: "ط ف ا", mean: "যাতে নিভিয়ে দেয়" }, { ar: "نُورَ", pron: "নুরা", root: "ن و ر", mean: "আলো/নূর" }, { ar: "اللَّهِ", pron: "আল্লাহি", root: "ا ل ه", mean: "আল্লাহর" }, { ar: "بِأَفْوَاهِهِم", pron: "বি-আফওয়াহিহিম", root: "ف و ه", mean: "তাদের মুখ দ্বারা" }, { ar: "وَاللَّهُ", pron: "ওয়াল-লাহু", root: "ا ل ه", mean: "আর আল্লাহ" }, { ar: "مُتِمُّ", pron: "মুতিম্মু", root: "ت م م", mean: "পূর্ণকারী" }, { ar: "نُورِهِ", pron: "নুরিহি", root: "ن و ر", mean: "তার নূরের" }, { ar: "وَلَوْ", pron: "ওয়া-লাও", root: "ل و", mean: "যদিও" }, { ar: "كَرِهَ", pron: "কারিহা", root: "ك ر ه", mean: "অপছন্দ করে" }, { ar: "الْكَافِرُونَ", pron: "আল-কাফিরুনা", root: "ك ف ر", mean: "কাফিররা" } ] },
+      { no: 9, trans: "তিনিই তাঁর রসূলকে পথনির্দেশ ও সত্য ধর্মসহ পাঠিয়েছেন, যাতে তিনি অন্য সব ধর্মের উপর তাকে বিজয়ী করেন, যদিও মুশরিকরা তা অপছন্দ করে।—", words: [ { ar: "هُوَ", pron: "হুওয়া", root: "ه و", mean: "তিনি" }, { ar: "الَّذِي", pron: "আল্লাযি", root: "ا ل ل ذ", mean: "যিনি" }, { ar: "أَرْسَلَ", pron: "আরসালা", root: "ر س ل", mean: "পাঠিয়েছেন" }, { ar: "رَسُولَهُ", pron: "রাসুলাহু", root: "ر س ل", mean: "তার রসূলকে" }, { ar: "بِالْهُدَى", pron: "বিল-হুদা", root: "ه د ي", mean: "পথনির্দেশ সহ" }, { ar: "وَدِينِ", pron: "ওয়া-দিনি", root: "د ي ن", mean: "এবং ধর্ম/আনুগত্য" }, { ar: "الْحَقِّ", pron: "আল-হাক্কি", root: "ح ق ق", mean: "সত্য" }, { ar: "لِيُظْهِرَهُ", pron: "লি-ইউযহিরাহু", root: "ظ ه ر", mean: "যাতে তাকে বিজয়ী/প্রকাশিত করেন" }, { ar: "عَلَى", pron: "'আলা", root: "ع ل ي", mean: "উপর" }, { ar: "الدِّينِ", pron: "আদ-দিনি", root: "د ي ن", mean: "ধর্মের" }, { ar: "كُلِّهِ", pron: "কুল্লিহি", root: "ك ل", mean: "সব" }, { ar: "وَلَوْ", pron: "ওয়া-লাও", root: "ل و", mean: "যদিও" }, { ar: "كَرِهَ", pron: "কারিহা", root: "ك ر ه", mean: "অপছন্দ করে" }, { ar: "الْمُشْرِكُونَ", pron: "আল-মুশরিকুনা", root: "ش ر ك", mean: "মুশরিকরা" } ] },
+      { no: 10, trans: "হে মুমিনগণ! আমি কি তোমাদেরকে এমন এক ব্যবসার পথ দেখাব, যা তোমাদেরকে যন্ত্রণাদায়ক শাস্তি থেকে রক্ষা করবে?—", words: [ { ar: "يَا", pron: "ইয়া", root: "ي ا", mean: "হে" }, { ar: "أَيُّهَا", pron: "আইয়ুহা", root: "ا ي", mean: "যারা" }, { ar: "الَّذِينَ", pron: "আল্লাযিনা", root: "ا ل ل ذ", mean: "যারা" }, { ar: "آمَنُوا", pron: "আমানু", root: "ا م ن", mean: "ঈমান এনেছে" }, { ar: "هَلْ", pron: "হাল", root: "ه ل", mean: "কি" }, { ar: "أَدُلُّكُمْ", pron: "আদুল্লুকুম", root: "د ل ل", mean: "আমি তোমাদের পথ দেখাব" }, { ar: "عَلَى", pron: "'আলা", root: "ع ل ي", mean: "উপর/দিকে" }, { ar: "تِجَارَةٍ", pron: "তিজারাতিন", root: "ت ج ر", mean: "ব্যবসা" }, { ar: "تُنجِيكُم", pron: "তুনজিকুম", root: "ن ج و", mean: "যা তোমাদের রক্ষা করবে" }, { ar: "مِن", pron: "মিন", root: "م ن", mean: "হতে" }, { ar: "عَذَابٍ", pron: "'আযাবিন", root: "ع ذ ب", mean: "শাস্তি" }, { ar: "أَلِيمٍ", pron: "আলিমিন", root: "ا ل م", mean: "যন্ত্রণাদায়ক" } ] },
+      { no: 11, trans: "তোমরা আল্লাহ ও তাঁর রসূলের প্রতি ঈমান আনবে, আল্লাহর পথে নিজেদের সম্পদ ও প্রাণ দিয়ে জিহাদ করবে—এটাই তোমাদের জন্য উত্তম, যদি তোমরা জানতে।—", words: [ { ar: "تُؤْمِنُونَ", pron: "তু'মিনুনা", root: "ا م ن", mean: "তোমরা ঈমান আনবে" }, { ar: "بِاللَّهِ", pron: "বিল-লাহি", root: "ا ل ه", mean: "আল্লাহর প্রতি" }, { ar: "وَرَسُولِهِ", pron: "ওয়া-রাসুলিহি", root: "ر س ل", mean: "এবং তার রসূলের প্রতি" }, { ar: "وَتُجَاهِدُونَ", pron: "ওয়া-তুজাহিদুনা", root: "ج ه د", mean: "এবং জিহাদ করবে" }, { ar: "فِي", pron: "ফি", root: "ف ي", mean: "মধ্যে" }, { ar: "سَبِيلِ", pron: "সাবিলি", root: "س ب ل", mean: "পথ" }, { ar: "اللَّهِ", pron: "আল্লাহি", root: "ا ل ه", mean: "আল্লাহর" }, { ar: "بِأَمْوَالِكُمْ", pron: "বি-আমওয়ালিকুম", root: "م و ل", mean: "তোমাদের সম্পদ দিয়ে" }, { ar: "وَأَنفُسِكُمْ", pron: "ওয়া-আনফুসিকুম", root: "ن ف س", mean: "এবং তোমাদের প্রাণ দিয়ে" }, { ar: "ذَلِكُمْ", pron: "যালিকুম", root: "ذ ل ك", mean: "এটাই" }, { ar: "خَيْرٌ", pron: "খাইরুন", root: "خ ي ر", mean: "উত্তম" }, { ar: "لَّكُمْ", pron: "লাকুম", root: "ل ك", mean: "তোমাদের জন্য" }, { ar: "إِن", pron: "ইন", root: "ا ن", mean: "যদি" }, { ar: "كُنتُمْ", pron: "কুনতুম", root: "ك و ن", mean: "তোমরা হও" }, { ar: "تَعْلَمُونَ", pron: "তা'লামুনা", root: "ع ل م", mean: "তোমরা জানো" } ] },
+      { no: 12, trans: "তিনি তোমাদের গুনাহ ক্ষমা করবেন এবং জান্নাতে প্রবেশ করাবেন, যার নিচে নদী প্রবাহিত, এবং উত্তম বাসস্থানে। এটাই মহাসাফল্য।—", words: [ { ar: "يَغْفِرْ", pron: "ইয়াগফির", root: "غ ف ر", mean: "ক্ষমা করবেন" }, { ar: "لَكُمْ", pron: "লাকুম", root: "ل ك", mean: "তোমাদের" }, { ar: "ذُنُوبَكُمْ", pron: "যুনুবাকুম", root: "ذ ن ب", mean: "তোমাদের গুনাহ" }, { ar: "وَيُدْخِلْكُمْ", pron: "ওয়া-ইউদখিলকুম", root: "د خ ل", mean: "এবং প্রবেশ করাবেন" }, { ar: "جَنَّاتٍ", pron: "জান্নাতিন", root: "ج ن ن", mean: "বাগান/উদ্যান" }, { ar: "تَجْرِي", pron: "তাজরি", root: "ج ر ي", mean: "প্রবাহিত" }, { ar: "مِن", pron: "মিন", root: "م ن", mean: "হতে" }, { ar: "تَحْتِهَا", pron: "তাহতিহা", root: "ح ت ي", mean: "তার নিচে" }, { ar: "الْأَنْهَارُ", pron: "আল-আনহারু", root: "ن ه ر", mean: "নদীসমূহ" }, { ar: "وَمَسَاكِنَ", pron: "ওয়া-মাসাকিনা", root: "س ك ن", mean: "এবং বাসস্থান" }, { ar: "طَيِّبَةً", pron: "তাইয়্যিবাতান", root: "ط ي ب", mean: "উত্তম/পবিত্র" }, { ar: "فِي", pron: "ফি", root: "ف ي", mean: "মধ্যে" }, { ar: "جَنَّاتِ", pron: "জান্নাতি", root: "ج ن ن", mean: "উদ্যানের" }, { ar: "عَدْنٍ", pron: "'আদিন", root: "ع د ن", mean: "স্থায়ী" }, { ar: "ذَلِكَ", pron: "যালিকা", root: "ذ ل ك", mean: "এটাই" }, { ar: "الْفَوْزُ", pron: "আল-ফাওযু", root: "ف و ز", mean: "সাফল্য" }, { ar: "الْعَظِيمُ", pron: "আল-'আযিমু", root: "ع ظ م", mean: "মহান" } ] },
+      { no: 13, trans: "আর আরেকটি বিষয় যা তোমরা পছন্দ করো—আল্লাহর সাহায্য ও আসন্ন বিজয়। আর মুমিনদের সুসংবাদ দাও।—", words: [ { ar: "وَأُخْرَى", pron: "ওয়া-উখরা", root: "ا خ ر", mean: "আর অন্য/আরেকটি" }, { ar: "تُحِبُّونَهَا", pron: "তুহিব্বুনাহা", root: "ح ب ب", mean: "যা তোমরা পছন্দ করো" }, { ar: "نَصْرٌ", pron: "নাসরুন", root: "ن ص ر", mean: "সাহায্য" }, { ar: "مِّنَ", pron: "মিনা", root: "م ن", mean: "হতে" }, { ar: "اللَّهِ", pron: "আল্লাহি", root: "ا ل ه", mean: "আল্লাহর" }, { ar: "وَفَتْحٌ", pron: "ওয়া-ফাতহুন", root: "ف ت ح", mean: "এবং বিজয়/উন্মোচন" }, { ar: "قَرِيبٌ", pron: "ক্বারিবুন", root: "ق ر ب", mean: "আসন্ন/নিকটবর্তী" }, { ar: "وَبَشِّرِ", pron: "ওয়া-বাশশিরি", root: "ب ش ر", mean: "এবং সুসংবাদ দাও" }, { ar: "الْمُؤْمِنِينَ", pron: "আল-মু'মিনিনা", root: "ا م ن", mean: "মুমিনদের" } ] },
+      { no: 14, trans: "হে মুমিনগণ! তোমরা আল্লাহর সাহায্যকারী হও, যেমন মরিয়মের পুত্র ঈসা হাওয়ারীগণকে বলেছিল, 'আল্লাহর পথে আমার সাহায্যকারী কে?' হাওয়ারীগণ বলল, 'আমরা আল্লাহর সাহায্যকারী।' অতঃপর বনী ইসরাঈলের একদল ঈমান এনেছিল এবং অন্যদল কুফুরি করেছিল। তখন আমরা যারা ঈমান এনেছিল তাদের শত্রুদের বিরুদ্ধে শক্তি দান করলাম, ফলে তারা বিজয়ী হল।—", words: [ { ar: "يَا", pron: "ইয়া", root: "ي ا", mean: "হে" }, { ar: "أَيُّهَا", pron: "আইয়ুহা", root: "ا ي", mean: "যারা" }, { ar: "الَّذِينَ", pron: "আল্লাযিনা", root: "ا ل ل ذ", mean: "যারা" }, { ar: "آمَنُوا", pron: "আমানু", root: "ا م ن", mean: "ঈমান এনেছে" }, { ar: "كُونُوا", pron: "কুনু", root: "ك و ن", mean: "তোমরা হও" }, { ar: "أَنصَارَ", pron: "আনসারা", root: "ن ص ر", mean: "সাহায্যকারী" }, { ar: "اللَّهِ", pron: "আল্লাহি", root: "ا ل ه", mean: "আল্লাহর" }, { ar: "كَمَا", pron: "কামা", root: "ك م", mean: "যেমন" }, { ar: "قَالَ", pron: "ক্বালা", root: "ق و ل", mean: "বলেছিল" }, { ar: "عِيسَى", pron: "'ঈসা", root: "ع ي س", mean: "ঈসা" }, { ar: "ابْنُ", pron: "ইবনু", root: "ب ن ي", mean: "পুত্র" }, { ar: "مَرْيَمَ", pron: "মারইয়ামা", root: "م ر ي م", mean: "মরিয়ম" }, { ar: "لِلْحَوَارِيِّينَ", pron: "লিল-হাওয়ারিয়্যিনা", root: "ح و ر", mean: "হাওয়ারী/সহচরদের" }, { ar: "مَنْ", pron: "মান", root: "م ن", mean: "কে" }, { ar: "أَنصَارِي", pron: "আনসারি", root: "ن ص ر", mean: "আমার সাহায্যকারী" }, { ar: "إِلَى", pron: "ইলা", root: "ا ل ي", mean: "দিকে" }, { ar: "اللَّهِ", pron: "আল্লাহি", root: "ا ل ه", mean: "আল্লাহর" }, { ar: "قَالَ", pron: "ক্বালা", root: "ق و ل", mean: "বলল" }, { ar: "الْحَوَارِيُّونَ", pron: "আল-হাওয়ারিয়্যুনা", root: "ح و ر", mean: "হাওয়ারীগণ" }, { ar: "نَحْنُ", pron: "নাহ্নু", root: "ن ح ن", mean: "আমরা" }, { ar: "أَنصَارُ", pron: "আনসারু", root: "ن ص ر", mean: "সাহায্যকারী" }, { ar: "اللَّهِ", pron: "আল্লাহি", root: "ا ل ه", mean: "আল্লাহর" }, { ar: "فَآمَنَتْ", pron: "ফা-আমানাত", root: "ا م ن", mean: "অতঃপর ঈমান এনেছিল" }, { ar: "طَّائِفَةٌ", pron: "তা-ইফাতুন", root: "ط و ف", mean: "একদল" }, { ar: "مِّن", pron: "মিন", root: "م ن", mean: "হতে" }, { ar: "بَنِي", pron: "বনি", root: "ب ن ي", mean: "সন্তানগণ" }, { ar: "إِسْرَائِيلَ", pron: "ইসরা-ইলা", root: "ا س ر ا ي ل", mean: "ইসরাঈল" }, { ar: "وَكَفَرَتْ", pron: "ওয়া-কাফারাত", root: "ك ف ر", mean: "এবং কুফুরি করেছিল" }, { ar: "طَّائِفَةٌ", pron: "তা-ইফাতুন", root: "ط و ف", mean: "একদল" }, { ar: "فَأَيَّدْنَا", pron: "ফা-আইয়াদনা", root: "ا ي د", mean: "অতঃপর আমরা শক্তি দান করলাম" }, { ar: "الَّذِينَ", pron: "আল্লাযিনা", root: "ا ل ل ذ", mean: "যাদের" }, { ar: "آمَنُوا", pron: "আমানু", root: "ا م ن", mean: "ঈমান এনেছিল" }, { ar: "عَلَى", pron: "'আলা", root: "ع ل ي", mean: "উপর" }, { ar: "عَدُوِّهِم", pron: "'আদুওয়িহিম", root: "ع د و", mean: "তাদের শত্রুদের" }, { ar: "فَأَصْبَحُوا", pron: "ফা-আসবাহু", root: "ص ب ح", mean: "অতঃপর তারা সকালে/হয়ে গেল" }, { ar: "ظَاهِرِينَ", pron: "যাহিরিনা", root: "ظ ه ر", mean: "বিজয়ী/প্রকাশ্য" } ] }
+    ];
+
+            function App() {
+              const [msg, setMsg] = useState("");
+              const [notes, setNotes] = useState({});
+              const [saved, setSaved] = useState({});
+
+              useEffect(() => {
+                const savedNotes = {};
+                ayahData.forEach((ayah, idx) => {
+                  const key = STORAGE_PREFIX + idx;
+                  const val = localStorage.getItem(key);
+                  if (val) savedNotes[idx] = val;
+                });
+                setNotes(savedNotes);
+              }, []);
+
+              const handleNoteChange = (idx, value) => {
+                const key = STORAGE_PREFIX + idx;
+                localStorage.setItem(key, value);
+                setNotes(prev => ({ ...prev, [idx]: value }));
+                setSaved(prev => ({ ...prev, [idx]: true }));
+                setTimeout(() => setSaved(prev => ({ ...prev, [idx]: false })), 2000);
+              };
+
+              return (
+                <div className="min-h-screen bg-[#f0fdf4] text-[#052e16] selection:bg-emerald-200">
+                  <style>{`
+                    @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+Bengali:wght@400;600;700;800&family=Hind+Siliguri:wght@400;600;700&family=Amiri:wght@400;700&display=swap');
+                    * { font-family: 'Hind Siliguri','Noto Serif Bengali', system-ui, sans-serif; }
+                    .amiri { font-family: 'Amiri', serif; }
+                  `}</style>
+                  <div className="mx-auto max-w-[880px] px-4 md:px-6 py-6 md:py-10">
+                    {/* হেডার */}
+                    <div className="relative overflow-hidden rounded-[28px] bg-gradient-to-br from-[#052e16] via-[#14532d] to-[#16a34a] p-[1.5px] shadow-[0_20px_60px_-15px_rgba(21,128,61,0.4)]">
+                      <div className="rounded-[26px] bg-gradient-to-br from-[#052e16] to-[#15803d] px-6 md:px-10 py-10 md:py-12 text-center relative overflow-hidden">
+                        <div className="absolute inset-0 opacity-[0.07] bg-[radial-gradient(circle_at_1px_1px,white_1px,transparent_0)] bg-[length:24px_24px]"></div>
+                        <div className="relative z-10">
+                          <div className="inline-flex items-center gap-2 rounded-full bg-white/10 border border-white/15 px-4 py-1.5 text-[18px] font-bold tracking-[0.2em] text-emerald-100 mb-5">
+                            <span className="h-2 w-2 rounded-full bg-emerald-300 animate-pulse"></span> 061তম সূরা
+                          </div>
+                          <h1 className="amiri text-[42px] md:text-[56px] font-bold leading-none text-white tracking-wide">سُورَةُ Assaf</h1>
+                          <p className="mt-2 text-[19px] md:text-[21px] font-bold text-emerald-100 leading-relaxed">আয়াত#</p>
+                          <p className="mt-2 text-[19px] md:text-[21px] font-bold text-emerald-100 leading-relaxed">ধাতব অর্থ • লিসানুল আরব অভিধান থেকে</p>
+                          <div className="mt-6 flex justify-center"><div className="h-[3px] w-20 rounded-full bg-gradient-to-r from-transparent via-emerald-300 to-transparent"></div></div>
+                          <div className="mt-6 flex flex-wrap justify-center gap-2 text-[12px] font-bold text-emerald-200/80">
+                            <span className="rounded-full bg-white/10 px-3 py-1 border border-white/10">লিটারেল অনুবাদ</span>
+                            <span className="rounded-full bg-white/10 px-3 py-1 border border-white/10">রূট + ধাতব অর্থ</span>
+                            <span className="rounded-full bg-white/10 px-3 py-1 border border-white/10">শব্দে শব্দে</span>
+                          </div>
+                          <div className="mt-4 text-[12px] font-bold text-emerald-300/70 tracking-widest">❝ এই কুরআন আল্লাহর বাণী — সকল ভুল-ত্রুটি থেকে মুক্ত ❞</div>
+                        </div>
+        {/* ডান দিকে নেওয়ার জন্য wrapper */}
+        <div className="mt-4 w-full flex justify-end pr-6">
+          <div className="text- font-bold tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-yellow-400 to-amber-600">
+            ❝ গোলাম ফারুক ❞
+          </div>
+        </div>
+                      </div>
+                    </div>
+        {/* ২. বিসমিল্লাহ লাইন */}
+                    <div className="mt-6 rounded-[16px] bg-white border border-emerald-200 shadow-[0_6px_20px_-8px_rgba(21,128,61,0.15)] px-6 py-4 text-center">
+                      <p className="text-[20px] md:text-[22px] font-bold text-[#052e16] leading-relaxed"> ‘‘হে আমার রব, আমি শয়তানদের প্ররোচনা থেকে তোমার কাছে আশ্রয় চাই।
+
+        এবং হে আমার রব, আমি তোমার কাছে আশ্রয় চাই—যাতে তারা আমার কাছে উপস্থিত না হয়।’’</p>
+                    </div>
+                    {/* আয়াতসমূহ */}
+                    <div className="mt-8 space-y-6">
+                      {ayahData.map((ayah, idx) => (
+                        <div key={idx} className="group relative rounded-[22px] bg-white border border-[#bbf7d0] shadow-[0_10px_30px_-10px_rgba(21,128,61,0.15)] overflow-hidden">
+                          <div className="h-[4px] w-full bg-gradient-to-r from-emerald-600 to-emerald-300"></div>
+                          <div className="p-6 md:p-7">
+                            <div className="flex items-center gap-3 mb-4">
+                              <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#052e16] text-white text-[16px] font-extrabold shadow">{ayah.no}</div>
+                              <span className="text-[13px] font-bold tracking-[0.15em] text-emerald-700 uppercase">আয়াত {ayah.no}</span>
+                              <div className="ml-auto h-px flex-1 bg-gradient-to-r from-emerald-100 to-transparent"></div>
+                            </div>
+                            <div className="rounded-[16px] bg-gradient-to-br from-emerald-50 to-[#f0fdf4] border border-emerald-100 p-5 md:p-6 mb-5">
+                              <p className="text-[21px] md:text-[22px] font-bold leading-[1.8] text-[#14532d] tracking-[-0.01em]">{ayah.trans}</p>
+                            </div>
+                            <div className="flex items-center gap-2 mb-3">
+                              <div className="h-5 w-1 rounded-full bg-emerald-600"></div>
+                              <p className="text-[14px] font-extrabold tracking-widest text-emerald-800 uppercase">শব্দার্থ (রূট + ধাতব অর্থ)</p>
+                            </div>
+                            <div className="rounded-[16px] bg-[#fcfffe] border border-dashed border-emerald-200 p-3 md:p-4">
+                              <div className="flex flex-wrap gap-2.5">
+                                {ayah.words.map((w, wi) => (
+                                  <div key={wi} className="inline-flex items-baseline gap-2 rounded-[14px] bg-[#f0fdf4] border border-emerald-200/70 px-3.5 py-2 shadow-[0_2px_0_#bbf7d0] hover:shadow-[0_4px_12px_-2px_rgba(21,128,61,0.15)] hover:-translate-y-[1px] transition-all">
+                                    <span className="amiri text-[22px] font-bold text-emerald-800 leading-none">{w.ar}</span>
+                                    <span className="text-[15px] font-medium text-[#4d7c5a]">–</span>
+                                    <span className="text-[16px] font-semibold text-[#14532d]">{w.pron}</span>
+                                    <span className="text-[15px] font-medium text-[#4d7c5a]">–</span>
+                                    <span className="text-[15px] font-bold text-amber-700">{w.root}</span>
+                                    <span className="text-[15px] font-medium text-[#4d7c5a]">–</span>
+                                    <span className="text-[17px] font-extrabold text-emerald-900">{w.mean}</span>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                            <div className="mt-4">
+                              <textarea
+                                placeholder="Note:  আয়াত বা শব্দার্থ সম্পর্কে আপনার মন্তব্য লিখুন..."
+                                className="w-full h-[80px] resize-none rounded-[14px] border-[2px] border-emerald-500/70 bg-[#f8fef9] px-4 py-3 text-[16px] font-bold leading-relaxed text-[#14532d] placeholder:text-emerald-800/40 placeholder:font-bold focus:outline-none focus:border-emerald-600 focus:ring-[3px] focus:ring-emerald-100 transition-all"
+                                value={notes[idx] || ""}
+                                onChange={(e) => handleNoteChange(idx, e.target.value)}
+                              />
+                              <div className={`save-indicator ${saved[idx] ? 'show' : ''}`}>
+                                ✅ সংরক্ষিত হয়েছে
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* শেষাংশ - সূরার নাম বাংলায় */}
+                    <div className="mt-10 rounded-[16px] bg-gradient-to-r from-emerald-700 via-emerald-600 to-[#052e16] p-[1.5px] shadow-[0_10px_30px_-10px_rgba(21,128,61,0.6)]">
+                      <div className="rounded-[14px] bg-gradient-to-r from-emerald-700 to-[#052e16] px-6 py-5 text-center">
+                        <p className="text-[21px] md:text-[22px] font-extrabold leading-relaxed text-white tracking-wide">আলহামদুলিল্লাহ – সূরা Assaf অনুবাদ সমাপ্ত</p>
+                        <div className="mt-2 flex justify-center"><div className="h-1 w-12 rounded-full bg-white/40"></div></div>
+                      </div>
+                    </div>
+                    <div className="mt-8 text-center text-[12px] font-bold tracking-widest text-emerald-800/50 uppercase">@সূরা Assaf (061) – ধাতব অর্থ (লিসানুল আরব) • রূট + ধাতব অর্থ • লিসানুল আরব</div>
+                  </div>
+                </div>
+              );
+            }
+
+            ReactDOM.createRoot(document.getElementById('root')).render(
+              React.createElement(React.StrictMode, null, React.createElement(App))
+            );
+          </script>
+        </body>
+        </html>

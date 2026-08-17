@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>আল-কুরআন - ১১৪ সূরা সম্পূর্ণ</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box} body{font-family:'Hind Siliguri',system-ui,sans-serif;background:#f4f9f4;display:flex;min-height:100vh}
+.sidebar{width:390px;min-width:390px;background:linear-gradient(180deg,#0a2f1f 0%,#0f3d28 100%);color:#e2f0e6;padding:20px 14px;height:100vh;overflow-y:auto;position:sticky;top:0;display:flex;flex-direction:column}
+.header{display:flex;align-items:center;gap:12px;margin-bottom:16px;padding-bottom:14px;border-bottom:1px solid rgba(255,255,255,.08)}
+.header i{font-size:24px;color:#8bc9a5;background:rgba(255,255,255,.06);padding:10px;border-radius:14px}
+.header h1{font-size:19px} .header span{font-size:11px;color:#8abaa0;display:block;margin-top:2px}
+.search-box{background:rgba(255,255,255,.07);border-radius:30px;padding:3px 14px;display:flex;align-items:center;border:1px solid rgba(255,255,255,.08);margin-bottom:10px}
+.search-box input{background:transparent;border:none;padding:11px 0;color:#f0faf3;width:100%;outline:none;font-size:14px} .search-box i{color:#90c8a8;margin-right:10px}
+.label{display:flex;justify-content:space-between;margin:14px 4px 8px;font-size:11px;font-weight:700;color:#a3d0b6;border-bottom:1px solid rgba(255,255,255,.06);padding-bottom:8px}
+.list{list-style:none;flex:1;overflow-y:auto} .list li{display:flex;align-items:center;gap:10px;padding:10px 12px;margin:3px 0;border-radius:10px;font-size:14px;color:#d4e8dc;cursor:pointer;border:1px solid transparent;transition:.15s}
+.list li:hover{background:rgba(255,255,255,.07);color:#fff} .list li.active{background:rgba(139,201,165,.22);border-color:rgba(139,201,165,.35);color:#fff}
+.no{min-width:32px;height:26px;display:grid;place-items:center;font-size:11px;font-weight:700;color:#8bc9a5;background:rgba(255,255,255,.08);border-radius:20px}
+.ar{font-family:'Amiri',serif;font-size:14px;color:#b4dfc4;min-width:60px;text-align:right} .dot{width:8px;height:8px;border-radius:50%;background:#16a34a;box-shadow:0 0 6px #16a34a}
+.main{flex:1;background:#f0fdf4;height:100vh;display:flex;flex-direction:column} .topbar{background:white;border-bottom:1px solid #bbf7d0;padding:12px 20px;display:flex;align-items:center;gap:12px;justify-content:space-between}
+.display{flex:1;overflow:auto;position:relative;background:#f0fdf4} .display iframe{width:100%;height:100%;border:none;background:white}
+.welcome{max-width:760px;margin:40px auto;background:white;border-radius:22px;padding:36px;border:1px solid #bbf7d0;text-align:center;line-height:1.8;color:#334155}
+.badge{font-size:11px;background:#f0fdf4;border:1px solid #bbf7d0;padding:4px 10px;border-radius:20px;white-space:nowrap}
+.single-ayah{display:none;max-width:860px;margin:20px auto;padding:0 20px 40px}
+.ayah-card{background:white;border-radius:20px;border:1px solid #bbf7d0;overflow:hidden;box-shadow:0 8px 30px rgba(0,0,0,.05)}
+.ayah-header{background:linear-gradient(90deg,#052e16,#0f4a2a);color:white;padding:16px 22px;display:flex;justify-content:space-between;align-items:center}
+.ayah-body{padding:26px 24px;line-height:2.1;font-size:17px}
+.ayah-actions{padding:12px 18px;background:#f8faf8;border-top:1px solid #e2f5e7;display:flex;gap:8px;flex-wrap:wrap}
+.btn{border:1px solid #bbf7d0;background:white;padding:7px 14px;border-radius:20px;font-size:13px;cursor:pointer;display:flex;align-items:center;gap:6px}
+.btn-primary{background:#16a34a;color:white;border-color:#16a34a}
+#hiddenFrame{display:none;width:0;height:0}
+.complete-badge{background:linear-gradient(90deg,#16a34a,#22c55e);color:white;padding:5px 12px;border-radius:20px;font-size:11px;font-weight:700}
+</style>
+</head>
+<body>
+<aside class="sidebar">
+<div class="header"><i class="fas fa-book-quran"></i><div><h1>আল-কুরআন</h1><span>১১৪ টি সূরা অনুবাদ অর্থ সহ • আলহামদুলিল্লাহ</span></div>
+<button id="homeBtn" title="হোম" style="margin-left:auto;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.18);color:#e2f0e6;width:40px;height:40px;border-radius:12px;cursor:pointer;display:grid;place-items:center"><i class="fas fa-house"></i></button>
+</div>
+<div class="search-box"><i class="fas fa-search"></i><input id="search" placeholder="সূরা খুঁজুন... নাম, নম্বর, আরবি"/></div>
+<div class="search-box" style="background:rgba(255,255,255,.13);border-color:#22c55e"><i class="fas fa-book-open" style="color:#8bc9a5"></i><input id="ayahSearch" placeholder="আয়াত: যেমন ৩:৭ বা ২:২৫৫" style="color:#fff"/><button id="ayahGo" style="background:#16a34a;border:none;color:white;padding:6px 16px;border-radius:20px;font-size:12px;font-weight:700;cursor:pointer;margin-left:6px">Go</button></div>
+<div class="label"><span>সূরা তালিকা (১১৪)</span><span id="count">114</span> <span class="complete-badge">✓ COMPLETE</span></div>
+<ul id="list" class="list"></ul> 
+</aside>
+<main class="main">
+<div class="topbar"><h2 id="topTitle"> সূরা নির্বাচন করুন</h2><div style="display:flex;gap:8px;align-items:center"><span id="topBadge" class="badge">১১৪ টি সূরা সম্পূর্ণ</span><button id="showFullBtn" style="display:none" class="btn btn-primary"><i class="fas fa-book"></i> পুরো সূরা</button></div></div>
+<div class="display" id="display">
+<div class="welcome" id="welcome"><div style="font-size:48px">﷽</div><h2 style="margin:16px 0 8px;color:#052e16">‘‘হে আমার রব, আমি শয়তানদের প্ররোচনা থেকে তোমার কাছে আশ্রয় চাই। এবং হে আমার রব, আমি তোমার কাছে আশ্রয় চাই—যাতে তারা আমার কাছে উপস্থিত না হয়।’’</h2>
+
+
+
+</div>
+<iframe id="frame" style="display:none"></iframe>
+<iframe id="hiddenFrame"></iframe>
+<div id="singleAyah" class="single-ayah"></div>
+</div>
+</main>
+<script>
+const surahNames = ["আল-ফাতিহা","আল-বাকারাহ","আল-ইমরান","আন-নিসা","আল-মায়িদাহ","আল-আনআম","আল-আরাফ","আল-আনফাল","আত-তাওবাহ","ইউনুস","হুদ","ইউসুফ","আর-রাদ","ইব্রাহীম","আল-হিজর","আন-নাহল","বনী-ইসরাঈল","আল-কাহফ","মারইয়াম","ত্বোয়া-হা","আল-আম্বিয়া","আল-হাজ্জ","আল-মু'মিনূন","আন-নূর","আল-ফুরকান","আশ-শু'আরা","আন-নামল","আল-কাসাস","আল-আনকাবুত","আর-রুম","লুকমান","আস-সাজদাহ","আল-আহযাব","সাবা","ফাতির","ইয়াসিন","আস-সাফফাত","সোয়াদ","আয-যুমার","আল-মু'মিন","হা-মীম সাজদাহ","আশ-শুরা","আয-যুখরুফ","আদ-দুখান","আল-জাসিয়াহ","আল-আহকাফ","মুহাম্মদ","আল-ফাতহ","আল-হুজুরাত","ক্বাফ","আয-যারিয়াত","আত-তূর","আন-নাজম","আল-ক্বামার","আর-রহমান","আল-ওয়াকিয়াহ","আল-হাদীদ","আল-মুজাদালাহ","আল-হাশর","আল-মুমতাহিনাহ","আস-সাফ","আল-জুমুআ","আল-মুনাফিকুন","আত-তাগাবুন","আত-তালাক","আত-তাহরীম","আল-মুলক","আল-ক্বালাম","আল-হাক্কাহ","আল-মা'আরিজ","নূহ","আল-জিন","আল-মুযযাম্মিল","আল-মুদ্দাস্সির","আল-কিয়ামাহ","আদ-দাহর","আল-মুরসালাত","আন-নাবা","আন-নাযি'আত","আবাসা","আত-তাকবীর","আল-ইনফিতার","আত-তাতফীফ","আল-ইনশিকাক","আল-বুরুজ","আত-তারিক","আল-আ'লা","আল-গাশিয়াহ","আল-ফাজর","আল-বালাদ","আশ-শামস","আল-লাইল","আদ-দুহা","আল-ইনশিরাহ","আত-তীন","আল-আলাক","আল-ক্বদর","আল-বাইয়্যিনাহ","আয-যিলযাল","আল-আদিয়াত","আল-কারিয়াহ","আত-তাকাসুর","আল-আসর","আল-হুমাযাহ","আল-ফীল","কুরাইশ","আল-মাউন","আল-কাওসার","আল-কাফিরুন","আন-নাসর","আল-মাসাদ","আল-ইখলাস","আল-ফালাক","আন-নাস"];
+const surahArabic = ["الفاتحة","البقرة","آل عمران","النساء","المائدة","الأنعام","الأعراف","الأنفال","التوبة","يونس","هود","يوسف","الرعد","إبراهيم","الحجر","النحل","الإسراء","الكهف","مريم","طه","الأنبياء","الحج","المؤمنون","النور","الفرقان","الشعراء","النمل","القصص","العنكبوت","الروم","لقمان","السجدة","الأحزاب","سبأ","فاطر","يس","الصافات","ص","الزمر","غافر","فصلت","الشورى","الزخرف","الدخان","الجاثية","الأحقاف","محمد","الفتح","الحجرات","ق","الذاريات","الطور","النجم","القمر","الرحمن","الواقعة","الحديد","المجادلة","الحشر","الممتحنة","الصف","الجمعة","المنافقون","التغابن","الطلاق","التحريم","الملك","القلم","الحاقة","المعارج","نوح","الجن","المزمل","المدثر","القيامة","الإنسان","المرسلات","النبأ","النازعات","عبس","التكوير","الانفطار","المطففين","الانشقاق","البروج","الطارق","الأعلى","الغاشية","الفجر","البلد","الشمس","الليل","الضحى","الشرح","التين","العلق","القدر","البينة","الزلزلة","العاديات","القارعة","التكاثر","العصر","الهمزة","الفيل","قريش","الماعون","الكوثر","الكافرون","النصر","المسد","الإخلاص","الفلق","الناس"];
+
+const fileMap = {
+1:'Surah-001-Fatiha-Literal.html',
+2:'Surah-002-Baqarah-Literal.html',
+3:'Surah-003-AlImran-Literal.html',
+4:'Surah-004-Nisa-Literal.html',
+5:'Surah-005-Maidah-Literal.html',
+6:'Surah-006-Anam-Literal.html',
+7:'Surah-007-Araaf-Literal.html',
+8:'Surah-008-Anfal-Literal.html',
+9:'Surah-009-Tawba-Literal.html',
+10:'Surah-010-Younus-Literal.html',
+11:'Surah-011-Hud-Literal.html',
+12:'Surah-012-Yusuf-Literal.html',
+13:'Surah-013-Rad-Literal.html',
+14:'Surah-014-Ibrahim-Literal.html',
+15:'Surah-015-Hijr-Literal.html',
+16:'Surah-016-Nahl-Literal.html',
+17:'Surah-017-Al-Isra-Literal.html',
+18:'Surah-018-Al-Kahf-Literal.html',
+19:'Surah-019-SurahMaryam-Literal.html',
+20:'Surah-020-Taha-Literal.html',
+21:'Surah-021-Anbya-Literal.html',
+22:'Surah-022-Hajj-Literal.html',
+23:'Surah-023-Al-Muminun-Literal.html',
+24:'Surah-024-An-Nur-Literal.html',
+25:'Surah-025-Furqan-Literal.html',
+26:'Surah-026-Ash-Shuara-Literal.html',
+27:'Surah-027-An-Naml-Literal.html',
+28:'Surah-028-Al-Qasas-Literal.html',
+29:'Surah-029-Al-Ankabut-Literal.html',
+30:'Surah-030-Ar-Rum-Literal.html',
+31:'Surah-031-Luqman-Literal.html',
+32:'Surah-032-As-Sajdah-Literal.html',
+33:'Surah-033-Al-Ahzab-Literal.html',
+34:'Surah-034-Saba-Literal.html',
+35:'Surah-035-Fatir-Literal.html',
+36:'Surah-036-Ya-Sin-Literal.html',
+37:'Surah-037-As-Saffat-Literal.html',
+38:'Surah-038-Sad-Literal.html',
+39:'Surah-039-Az-Zumar-Literal.html',
+40:'Surah-040-Muminoon-Literal.html',
+41:'Surah-041-ha-mim-sajadha-Literal.html',
+42:'Surah-042-Ash-Shuraa-Literal.html',
+43:'Surah-043-Zukhruf-Literal.html',
+44:'Surah-044-Ad-Dukhan-Literal.html',
+45:'Surah-045-Al-Jathiyah-Literal.html',
+46:'Surah-046-Al-Ahqaf-Literal.html',
+47:'Surah-047-Muhammad-Literal.html',
+48:'Surah-048-Al-Fath-Literal.html',
+49:'Surah-049-Al-Hujurat-Literal.html',
+50:'Surah-050-Qaf-Literal.html',
+51:'Surah-051-Adh-Dhariyat-Literal.html',
+52:'Surah-052-At-Tur-Literal.html',
+53:'Surah-053-An-Najm-Literal.html',
+54:'Surah-054-Al-Qamar-Literal.html',
+55:'Surah-055-Ar-Rahman-Literal.html',
+56:'Surah-056-Al-Waqiah-Literal.html',
+57:'Surah-057-Al-Hadid-Literal.html',
+58:'Surah-058-Al-Mujadila-Literal.html',
+59:'Surah-059-Al-Hashr-Literal.html',
+60:'Surah-060-Mumtahina-Literal.html',
+61:'Surah-061-Assaf-Literal.html',
+62:'Surah-062-Al-Jumuah-Literal.html',
+63:'Surah-063-Al-Munafiqun-Literal.html',
+64:'Surah-064-At-Taghabun-Literal.html',
+65:'Surah-065-At-Talaq-Literal.html',
+66:'Surah-066-At-Tahrim-Literal.html',
+67:'Surah-067-Al-Mulk-Literal.html',
+68:'Surah-068-Al-Qalam-Literal.html',
+69:'Surah-069-Al-Haqqah-Literal.html',
+70:'Surah-070-Al-Maarij-Literal.html',
+71:'Surah-071-SurahNuh-Literal.html',
+72:'Surah-072-Al-Jinn-Literal.html',
+73:'Surah-073-Al-Muzzammil-Literal.html',
+74:'Surah-074-Mudassir-Literal.html',
+75:'Surah-075-Qiyamah-Literal.html',
+76:'Surah-076-Al-Insan-Literal.html',
+77:'Surah-077-Mursalat-Literal.html',
+78:'Surah-078-An-Naba-Literal.html',
+79:'Surah-079-An-Naziat-Literal.html',
+80:'Surah-080-Abasa-Literal.html',
+81:'Surah-081-Takwir-Literal.html',
+82:'Surah-082-Al-Infitar-Literal.html',
+83:'Surah-083-Al-Mutaffifin-Literal.html',
+84:'Surah-084-Inshiqaq-Literal.html',
+85:'Surah-085-Al-Buruj-Literal.html',
+86:'Surah-086-At-Tariq-Literal.html',
+87:'Surah-087-Al-Ala-Literal.html',
+88:'Surah-088-Al-Ghashiyah-Literal.html',
+89:'Surah-089-Al-Fajr-Literal.html',
+90:'Surah-090-Balad-Literal.html',
+91:'Surah-091-Sams-Literal.html',
+92:'Surah-092-Layl-Literal.html',
+93:'Surah-093-Duhaa-Literal.html',
+94:'Surah-094-Ash-Sharh-Literal.html',
+95:'Surah-095-Tin-Literal.html',
+96:'Surah-096-Al-k-Literal.html',
+97:'Surah-097-kadr-Literal.html',
+98:'Surah-098-Bayyinah-Literal.html',
+99:'Surah-099-Zalzalah-Literal.html',
+100:'Surah-100-Adiath-Literal.html',
+101:'Surah-101-Qariah-Literal.html',
+102:'Surah-102-Takasur-Literal.html',
+103:'Surah-103-Asr-Literal.html',
+104:'Surah-104-Humaza-Literal.html',
+105:'Surah-105-Fil-Literal.html',
+106:'Surah-106-Quraish-Literal.html',
+107:'Surah-107-Maun-Literal.html',
+108:'Surah-108-Kawthar-Literal.html',
+109:'Surah-109-Kafirun-Literal.html',
+110:'Surah-110-Nasr-Literal.html',
+111:'Surah-111-MasadLahab-Literal.html',
+112:'Surah-112-Ikhlas-Literal.html',
+113:'Surah-113-Falaq-Literal.html',
+114:'Surah-114-Nas-Literal.html'
+};
+
+const listEl=document.getElementById('list'), frame=document.getElementById('frame'), hiddenFrame=document.getElementById('hiddenFrame'), welcome=document.getElementById('welcome'), singleAyahDiv=document.getElementById('singleAyah'), topTitle=document.getElementById('topTitle'), topBadge=document.getElementById('topBadge'), search=document.getElementById('search'), ayahSearch=document.getElementById('ayahSearch'), ayahGo=document.getElementById('ayahGo'), homeBtn=document.getElementById('homeBtn'), showFullBtn=document.getElementById('showFullBtn');
+
+let currentSurah=null;
+
+function goHome(){
+  document.querySelectorAll('.list li').forEach(el=>el.classList.remove('active'));
+  search.value=''; ayahSearch.value=''; render();
+  currentSurah=null;
+  welcome.style.display='block'; frame.style.display='none'; frame.src='about:blank'; singleAyahDiv.style.display='none'; showFullBtn.style.display='none';
+  topTitle.textContent=' সূরা নির্বাচন করুন'; topBadge.textContent='১১৪ টি সূরা সম্পূর্ণ • আলহামদুলিল্লাহ';
+  welcome.innerHTML=`<div style="font-size:48px"Allah/div><h2 style="margin:16px 0 8px;color:#052e16">আলহামদুলিল্লাহ - ১১৪ সূরা সম্পূর্ণ</h2>
+`;
+}
+function render(filter=''){
+  const term=filter.toLowerCase().trim(); listEl.innerHTML=''; let visible=0;
+  surahNames.forEach((name,idx)=>{
+    const no=idx+1, ar=surahArabic[idx], file=fileMap[no];
+    const match=!term || no.toString().includes(term) || name.toLowerCase().includes(term) || ar.includes(term);
+    if(!match) return; visible++;
+    const li=document.createElement('li'); li.dataset.no=no;
+    li.innerHTML=`<span class="no">${no}</span><span style="flex:1;font-weight:600">${name}</span><span class="ar">${ar}</span><span class="dot"></span>`;
+    listEl.appendChild(li);
+  }); document.getElementById('count').textContent=visible;
+}
+function showFullSurah(){
+  if(!currentSurah) return;
+  singleAyahDiv.style.display='none'; welcome.style.display='none'; frame.style.display='block'; showFullBtn.style.display='none';
+  frame.src=fileMap[currentSurah];
+  topBadge.textContent='পুরো সূরা: '+surahNames[currentSurah-1];
+}
+function extractSingleAyahFromDoc(doc, ayahNo){
+  let el = doc.getElementById(`ayah-${ayahNo}`) || doc.getElementById(`verse-${ayahNo}`) || doc.querySelector(`[data-ayah="${ayahNo}"]`) || doc.querySelector(`[id="${ayahNo}"]`);
+  if(el){ if(el.innerText.length<30 && el.parentElement) el=el.parentElement; return el; }
+  const all = doc.body.querySelectorAll('div, p, li, tr, section, article');
+  for(let node of all){
+    if(node.children.length>8) continue;
+    const txt = node.innerText ? node.innerText.trim() : '';
+    if(!txt || txt.length>2500) continue;
+    if(txt.startsWith(ayahNo+'.') || txt.startsWith(`(${ayahNo})`) || txt.includes(`আয়াত ${ayahNo}`) || txt.match(new RegExp(`^${ayahNo}\\s*[:।]`))){ return node; }
+  }
+  return null;
+}
+function showSingleAyah(surahNo, ayahNo){
+  currentSurah=surahNo;
+  document.querySelectorAll('.list li').forEach(el=>el.classList.remove('active'));
+  document.querySelector(`.list li[data-no="${surahNo}"]`)?.classList.add('active');
+  const name=surahNames[surahNo-1], file=fileMap[surahNo];
+  topTitle.textContent=`${surahNo}:${ayahNo} - ${name} (${surahArabic[surahNo-1]})`;
+  welcome.style.display='none'; frame.style.display='none'; singleAyahDiv.style.display='block'; showFullBtn.style.display='inline-flex';
+  singleAyahDiv.innerHTML=`<div style="text-align:center;padding:40px"><i class="fas fa-spinner fa-spin"></i> ${surahNo}:${ayahNo} লোড হচ্ছে...</div>`;
+  topBadge.textContent=`লোড হচ্ছে ${surahNo}:${ayahNo}`;
+  let settled=false;
+  const loadTimeout = setTimeout(()=>{
+    if(settled) return; settled=true;
+    singleAyahDiv.innerHTML = `<div class="ayah-card"><div class="ayah-header"><span>${name} - আয়াত ${ayahNo}</span><span>${surahNo}:${ayahNo}</span></div><div class="ayah-body"><p>ফাইলটি লোড হতে অনেক সময় নিচ্ছে বা লোড হয়নি (<code>${file}</code>)। ফাইলটি এই index.html-এর একই ফোল্ডারে আছে কিনা এবং লোকাল সার্ভার (যেমন Live Server) দিয়ে খোলা হয়েছে কিনা যাচাই করুন — সরাসরি ফাইলে ডাবল-ক্লিক করে (file://) খুললে ব্রাউজার নিরাপত্তার কারণে এটি ব্লক হতে পারে।</p></div><div class="ayah-actions"><button class="btn btn-primary" onclick="showFullSurah()">পুরো সূরা</button></div></div>`;
+  }, 6000);
+  hiddenFrame.onload = function(){
+    if(settled) return; settled=true; clearTimeout(loadTimeout);
+    try{
+      const doc = hiddenFrame.contentDocument || hiddenFrame.contentWindow.document;
+      const ayahEl = extractSingleAyahFromDoc(doc, ayahNo);
+      if(!ayahEl){
+        singleAyahDiv.innerHTML = `<div class="ayah-card"><div class="ayah-header"><span>${name} - আয়াত ${ayahNo}</span><span>${surahNo}:${ayahNo}</span></div><div class="ayah-body"><p>আয়াতটি আলাদা করা যায়নি, পুরো সূরা খুলে দেখুন।</p></div><div class="ayah-actions"><button class="btn btn-primary" onclick="showFullSurah()">পুরো সূরা</button></div></div>`;
+        return;
+      }
+      singleAyahDiv.innerHTML = `<div class="ayah-card"><div class="ayah-header"><div><b>${name}</b> • ${surahArabic[surahNo-1]} (${surahNo}:${ayahNo})</div><div style="font-size:12px;background:rgba(255,255,255,.18);padding:4px 12px;border-radius:20px">আয়াত ${ayahNo}</div></div><div class="ayah-body">${ayahEl.innerHTML}</div><div class="ayah-actions"><button class="btn" onclick="navigator.clipboard.writeText(document.querySelector('.ayah-body').innerText)"><i class="fas fa-copy"></i> কপি</button><button class="btn" onclick="showSingleAyah(${surahNo}, ${ayahNo-1>0?ayahNo-1:1})"><i class="fas fa-chevron-left"></i> আগের</button><button class="btn" onclick="showSingleAyah(${surahNo}, ${ayahNo+1})">পরের <i class="fas fa-chevron-right"></i></button><button class="btn btn-primary" onclick="showFullSurah()"><i class="fas fa-book-open"></i> পুরো সূরা</button></div></div>`;
+      topBadge.textContent=`✓ ${surahNo}:${ayahNo} - ${name}`;
+    }catch(e){
+      singleAyahDiv.innerHTML = `<div class="ayah-card"><div class="ayah-header"><span>${name} - আয়াত ${ayahNo}</span><span>${surahNo}:${ayahNo}</span></div><div class="ayah-body"><p><b>টেকনিক্যাল সমস্যা:</b> ${e.message}</p><p style="margin-top:10px;font-size:14px;color:#555">এটি সাধারণত ঘটে যদি আপনি এই ফাইলটি সরাসরি ডাবল-ক্লিক করে (file://) খুলে থাকেন — ব্রাউজার নিরাপত্তার কারণে একটি স্থানীয় ফাইলের ভেতরে অন্য স্থানীয় ফাইল স্ক্রিপ্ট দিয়ে পড়তে বাধা দেয়। সমাধান: এই ফোল্ডারটি একটি লোকাল সার্ভার (VSCode-এর Live Server extension, বা <code>python -m http.server</code>) দিয়ে চালান এবং <code>http://localhost...</code> ঠিকানা থেকে খুলুন।</p></div><div class="ayah-actions"><button class="btn btn-primary" onclick="showFullSurah()">পুরো সূরা</button></div></div>`;
+    }
+  };
+  hiddenFrame.src = file + `?ayah=${ayahNo}&t=${Date.now()}`;
+}
+function showSurah(no){
+  currentSurah=no;
+  document.querySelectorAll('.list li').forEach(el=>el.classList.remove('active'));
+  document.querySelector(`.list li[data-no="${no}"]`)?.classList.add('active');
+  const name=surahNames[no-1], file=fileMap[no]; topTitle.textContent=no+'. '+name+' - '+surahArabic[no-1];
+  welcome.style.display='none'; singleAyahDiv.style.display='none'; frame.style.display='block'; showFullBtn.style.display='none';
+  frame.src=file; topBadge.textContent='লোড হচ্ছে... '+name; frame.onload=()=>topBadge.textContent='✓ '+name+' ('+no+')';
+}
+function handleAyahSearch(){
+  const raw = ayahSearch.value.trim(); if(!raw) return;
+  const bnMap={'০':'0','১':'1','২':'2','৩':'3','৪':'4','৫':'5','৬':'6','৭':'7','৮':'8','৯':'9'};
+  let normalized = raw.replace(/[০-৯]/g, d=>bnMap[d]).replace(/[ঃ॥]/g, ':');
+  const match = normalized.match(/^(\d+)\s*[:ঃ\-।\s]\s*(\d+)$/);
+  if(!match){ alert('ফরম্যাট: ৩:৭ বা ৩ঃ৭ বা 3:7'); return; }
+  const s = parseInt(match[1]), a = parseInt(match[2]);
+  if(s<1 || s>114){ alert('সূরা ১-১১৪'); return; }
+  showSingleAyah(s, a);
+}
+listEl.addEventListener('click', e=>{ const li=e.target.closest('li'); if(li) showSurah(parseInt(li.dataset.no)); });
+search.addEventListener('input', e=>render(e.target.value));
+ayahGo.addEventListener('click', handleAyahSearch);
+ayahSearch.addEventListener('keydown', e=>{ if(e.key==='Enter') handleAyahSearch(); });
+homeBtn.addEventListener('click', goHome);
+showFullBtn.addEventListener('click', showFullSurah);
+render();
+</script>
+</body>
+</html>
